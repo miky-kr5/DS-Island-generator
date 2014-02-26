@@ -16,3 +16,12 @@
 *.exe
 *.out
 *.app
+ds
+
+# Emacs backups
+*~
+
+# Output netpbm images
+*.pbm
+*.pgm
+*.ppm

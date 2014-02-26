@@ -179,15 +179,19 @@ void smooth ( int *** map, unsigned int MAP_SIZE) {
     for ( j = 0; j < MAP_SIZE; ++j ) {
       avg = 0;
 
-      avg += ( * map )[ i ][ j ];
-      avg += ( * map )[ ( i + 1 ) % MAP_SIZE ][ j ];
-      avg += ( * map )[ ( i - 1 ) < 0 ? MAP_SIZE - 1 : i - 1 ][ j ];
-      avg += ( * map )[ i ][ ( j + 1 ) % MAP_SIZE ];
-      avg += ( * map )[ i ][ ( j  - 1 ) < 0 ? MAP_SIZE - 1 : j - 1 ];
-      avg += ( * map )[ ( i + 1 ) % MAP_SIZE ][ ( j + 1 ) % MAP_SIZE ];
-      avg += ( * map )[ ( i + 1 ) % MAP_SIZE ][ ( j  - 1 ) < 0 ? MAP_SIZE - 1 : j - 1 ];
-      avg += ( * map )[ ( i - 1 ) < 0 ? MAP_SIZE - 1 : i - 1 ][ ( j + 1 ) % MAP_SIZE ];
-      avg += ( * map )[ ( i - 1 ) < 0 ? MAP_SIZE - 1 : i - 1 ][ ( j  - 1 ) < 0 ? MAP_SIZE - 1 : j - 1 ];
+      /* I C H
+       * E A D
+       * G B F */
+
+      /* I */ avg += ( * map )[ ( i - 1 ) < 0 ? MAP_SIZE - 1 : i - 1 ][ ( j  - 1 ) < 0 ? MAP_SIZE - 1 : j - 1 ];
+      /* C */ avg += ( * map )[ ( i - 1 ) < 0 ? MAP_SIZE - 1 : i - 1 ][ j                                     ];
+      /* H */ avg += ( * map )[ ( i - 1 ) < 0 ? MAP_SIZE - 1 : i - 1 ][ ( j + 1 ) % MAP_SIZE                  ];
+      /* E */ avg += ( * map )[ i                                    ][ ( j  - 1 ) < 0 ? MAP_SIZE - 1 : j - 1 ];
+      /* A */ avg += ( * map )[ i                                    ][ j                                     ];
+      /* D */ avg += ( * map )[ i                                    ][ ( j + 1 ) % MAP_SIZE                  ];
+      /* G */ avg += ( * map )[ ( i + 1 ) % MAP_SIZE                 ][ ( j  - 1 ) < 0 ? MAP_SIZE - 1 : j - 1 ];
+      /* B */ avg += ( * map )[ ( i + 1 ) % MAP_SIZE                 ][ j                                     ];
+      /* F */ avg += ( * map )[ ( i + 1 ) % MAP_SIZE                 ][ ( j + 1 ) % MAP_SIZE                  ];
 
       avg /= 9;
 
@@ -197,6 +201,7 @@ void smooth ( int *** map, unsigned int MAP_SIZE) {
 
   for ( i = 0; i < MAP_SIZE; ++i ){
     memcpy ( ( * map )[ i ], temp[ i ], MAP_SIZE * sizeof ( int ) );
+    free ( temp[ i ] );
   }
 
   free ( temp );
