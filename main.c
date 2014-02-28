@@ -8,7 +8,7 @@
 #include <float.h>
 #include <string.h>
 
-#include "ds.h"
+#include "island.h"
 
 struct COLOR {
   unsigned char r;

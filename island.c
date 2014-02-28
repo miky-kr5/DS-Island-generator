@@ -18,7 +18,7 @@
 
 #endif
 
-#include "ds.h"
+#include "island.h"
 
 static const float SEED = 1000.0;
 
@@ -160,7 +160,6 @@ extern void mult ( float *** fmap, int *** imap, unsigned int MAP_SIZE ) {
   
   for ( i = 0; i < MAP_SIZE; ++i ) {
     for ( j = 0; j < MAP_SIZE; ++j ) {
-      /*fprintf ( stderr, "%f %d\n", ( * fmap )[ i ][ j ], ( * imap )[ i ][ j ] );*/
       ( * imap )[ i ][ j ] = ( int )( ( ( * fmap )[ i ][ j ] * ( ( float ) ( * imap )[ i ][ j ] / 255.0f ) ) * 250.0f );
     }
   }
@@ -211,4 +210,26 @@ static float randomFloat() {
   float r =  ( float ) random() / ( float ) RAND_MAX;
   r = ( r * 2.0 ) - 1.0;
   return r;
+}
+
+terrain_t terrainType( int h ) {
+  if ( h < 30 ) {
+    if ( h < 15 ) {
+      return DEEP_WATER;
+    } else {
+      return SHALLOW_WATER;
+    }
+  } else {
+    if ( h < 40 ) {
+      return SAND;
+    } else if ( h >= 40 && h < 100 ) {
+      return GRASS;
+    } else if ( h >= 100 && h < 150 ) {
+      return FOREST;
+    } else if ( h >= 180 ) {
+      return MOUNTAIN;
+    } else {
+      return HILL;
+    }
+  }
 }

@@ -1,16 +1,24 @@
-LDLIBS = -lm
+CC := gcc
+CFLAGS := -I./ -ansi -pedantic
+LDFLAGS := -L./
+LDLIBS := -lm -lisland
 
-all: CFLAGS = -O3 -ansi -pedantic
-all: ds
+all: CFLAGS += -O3
+all: lib island
 
-debug: CFLAGS = -g -ansi -pedantic
-debug: ds
+debug: CFLAGS += -g
+debug: lib island
 
-ds: main.o ds.o
+lib: libisland.a
 
-main.o: main.c ds.h
+libisland.a: island.o
+	ar rcs libisland.a island.o
 
-ds.o: ds.c ds.h
+island: main.o
+
+main.o: main.c island.h
+
+island.o: island.c island.h
 
 clean:
-	$(RM) *.o ds
+	$(RM) *.o *.a island

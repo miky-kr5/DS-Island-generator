@@ -16,7 +16,7 @@
 *.exe
 *.out
 *.app
-ds
+island
 
 # Emacs backups
 *~

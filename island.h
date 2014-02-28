@@ -1,15 +1,24 @@
-#ifndef DS_H
-#define DS_H
+#ifndef ISLAND_H
+#define ISLAND_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+typedef enum TERRAIN_TYPE { DEEP_WATER,
+                            SHALLOW_WATER,
+                            SAND,
+                            GRASS,
+                            FOREST,
+                            HILL,
+                            MOUNTAIN
+                          } terrain_t;
+
   /**
    * Generate a diamond-square fractal map.
    */
   extern void ds ( float ***, const unsigned int );
-  
+
   /**
    * Generate a mask using particle deposition.
    */
@@ -34,7 +43,13 @@ extern "C" {
    * Multiply the diamond square map with the island mask.
    * Both matrices must have been normalized before.
    */
-  extern void mult ( float ***, int *** , unsigned int);
+  extern void mult ( float ***, int ***, unsigned int );
+
+  /**
+   * Given a sample from a heightmap, return the terrain
+   * type that correspond it.
+   */
+  terrain_t terrainType( int );
 
 #ifdef __cplusplus
 }
